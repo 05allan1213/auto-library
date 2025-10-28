@@ -1,0 +1,50 @@
+name: Auto Check-In & Sign-Out
+
+on:
+  schedule:
+    # --- 定时任务触发 ---
+    - cron: '19 5 * * *'   # 每天北京时间13:08签到（UTC 05:08）
+    - cron: '30 5 * * *'  # 每天北京时间13:15签退（UTC 05:15）
+  workflow_dispatch:        # 手动触发也可以执行
+
+jobs:
+  auto_lib:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set timezone to Asia/Shanghai
+        run: |
+          sudo timedatectl set-timezone Asia/Shanghai
+          date
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # -------------------------
+      # 根据触发时间判断执行逻辑
+      # -------------------------
+      - name: Auto Check-In or Sign-Out
+        run: |
+          hour=$(date +%H)
+          minute=$(date +%M)
+          echo "当前北京时间: ${hour}:${minute}"
+
+          # 签到逻辑：13:08 左右执行
+          if [ "$hour" -eq 13 ] && [ "$minute" -le 10 ]; then
+            echo "执行签到脚本..."
+            python check_in.py
+          # 签退逻辑：13:15 左右执行
+          elif [ "$hour" -eq 13 ] && [ "$minute" -ge 11 ] && [ "$minute" -le 20 ]; then
+            echo "执行签退脚本..."
+            python sign_out.py
+          else
+            echo "当前时间未命中签到或签退区间，跳过。"
+          fi
