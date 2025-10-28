@@ -1,0 +1,30 @@
+name: Auto Sign-Out
+
+on:
+  schedule:
+    - cron: '52 4 * * *'  # 每天北京时间12:52执行签退（UTC 04:52）
+  workflow_dispatch:
+
+jobs:
+  sign_out_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set timezone to Asia/Shanghai
+        run: |
+          sudo timedatectl set-timezone Asia/Shanghai
+          date
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run sign-out script
+        run: python sign_out.py
