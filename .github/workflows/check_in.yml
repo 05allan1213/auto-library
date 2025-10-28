@@ -2,7 +2,7 @@ name: Auto Check-In
 
 on:
   schedule:
-    - cron: '50 4 * * *'  # 每天北京时间12:50执行签到（UTC 04:50）
+    - cron: '4 5 * * *'  # 每天北京时间12:50执行签到（UTC 04:50）
   workflow_dispatch:
 
 jobs:
