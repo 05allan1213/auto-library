@@ -1,0 +1,40 @@
+# 通知渠道选择,分别代表Telegram、Bark、Anpush、钉钉
+PUSH_METHOD: "DD"
+# 1.TG
+# 2.ANPUSH
+# 3.BARK
+# 4.DD
+# 要填写具体的字母而不是数字
+# 例如：
+# PUSH_METHOD: "TG"
+
+# Telegram 相关
+CHANNEL_ID: ""
+TELEGRAM_BOT_TOKEN: ""
+
+# Bark 相关
+BARK_URL: ""
+BARK_EXTRA: ""
+
+# Anpush 相关
+ANPUSH_TOKEN: ""
+ANPUSH_CHANNEL: ""
+
+# 钉钉 token
+# 在群内添加机器人，获取机器人的 webhook 地址和签名，并将其填入 DD_BOT_TOKEN 和 DD_BOT_SECRET 中
+DD_BOT_TOKEN: "cb4e8e900694cb9c611d91e865fecb1a82a6fe84723364fa9d3f0c40e1b7013b"
+DD_BOT_SECRET: "SECc3d28312d91ce0456d887abff49c37a8a8cd26af4ef7a4ff927f5c26fd84b581"
+
+# 账号授权相关，USERNAME 和 PASSWORD 请填入你的学号和密码
+USERNAME: "2023413349"
+PASSWORD: "801026qweASD@"
+
+# 是否是 Github Action
+GITHUB: false
+
+SEAT_ID: # 这里只需要填首位号，函数会在这个范围内生成随机座位号
+  - 7292
+  - 7315
+
+CLASSROOMS_NAME:
+  - 西校区图书馆-三层自习室
