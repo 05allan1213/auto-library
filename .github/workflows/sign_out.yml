@@ -2,7 +2,7 @@ name: Auto Sign-Out
 
 on:
   schedule:
-    - cron: '7 5 * * *'  # 每天北京时间12:52执行签退（UTC 04:52）
+    - cron: '15 5 * * *'  # 每天北京时间12:52执行签退（UTC 04:52）
   workflow_dispatch:
 
 jobs:
