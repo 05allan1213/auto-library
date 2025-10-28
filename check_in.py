@@ -289,9 +289,31 @@ def lib_rsv(bearer_token, user_name):
 
 if __name__ == "__main__":
     try:
+        # -------------------------------
+        # 精准等待逻辑（保证严格执行时间）
+        # -------------------------------
+        target_hour = 13      # 目标签到小时（北京时间）
+        target_minute = 40    # 目标签到分钟（北京时间）
+
+        now = datetime.now()
+        target_time = now.replace(hour=target_hour, minute=target_minute, second=0, microsecond=0)
+
+        # 如果现在还没到目标时间，就等待
+        if now < target_time:
+            wait_seconds = (target_time - now).total_seconds()
+            logger.info(f"当前时间 {now.strftime('%H:%M:%S')}，距离签到时间还有 {int(wait_seconds)} 秒，等待中...")
+            time.sleep(wait_seconds)
+        else:
+            logger.info(f"当前时间 {now.strftime('%H:%M:%S')} 已到签到时间，直接执行。")
+
+        # -------------------------------
+        # 原始主程序逻辑
+        # -------------------------------
         read_config_from_yaml()
         get_auth_token()
         lib_rsv(AUTH_TOKEN, USERNAME)
 
     except KeyboardInterrupt:
         logger.info("主动退出程序，程序将退出。")
+
+
